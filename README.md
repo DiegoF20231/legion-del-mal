@@ -1,5 +1,6 @@
 
-# 🦹‍♂️ La Legión del Mal - Desde local
+# 🦹‍♂️ La Legión del Mal!! - Desde local
+### Es un grupo dedicado a aprender Git + Github
 
 
 > _"El mundo no se conquista con fuerza bruta, se conquista con un buen plan y control de versiones."_
