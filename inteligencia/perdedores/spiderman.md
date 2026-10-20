@@ -13,3 +13,9 @@ Spiderman es un superhéroe de Marvel
 ## Familiares
 
 - Familiar 1
+
+
+## Películas
+
+- Spiderman: No way home
+- Spiderman: Far from Home
