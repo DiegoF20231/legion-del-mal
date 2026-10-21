@@ -55,6 +55,6 @@ jobs:
           echo ""
           echo "Fecha: $(date -u + "%d/%m/%Y - %H:%M UTC")"
           echo "Mensaje"
-          ${{inputs.cow_character}} -f eyes "${{inputs.mensaje}}"
+          cowsay ${{inputs.cow_character}} -f eyes "${{inputs.mensaje}}"
           echo ""
           echo "${{inputs.villano}}"
