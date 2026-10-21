@@ -16,29 +16,19 @@ jobs:
                   echo ""
                   echo "❌ pero qué paso? no hay nada"
 
-            - name: Reporte de identidad
-              run: |
-                  echo "Reporte de identidad"
-                  echo "===================="
-                  echo ""
-                  echo "Nombre clave: ${{github.actor}}"
-                  echo ""
-                  echo "Contexto de Github"
-                  echo "Repo: ${{github.repository}}"
-                  echo "Operación: ${{github.sha}}"
-                  echo "Metadata: ${{toJson(github)}}"
+            - name: "Brainiac desbloquea la bóveda"
+              uses: actions/checkout@4
 
-            - name: Capacidades del agente
+            - name: "Ahora sí, vamos a ver los planes"
               run: |
-                  echo "Capacidades detectadas"
-                  echo "Sistema operativo"
-                  uname -a
-                  echo "Habilidades técnicas"
-                  node --version
-                  git --version
-                  python3 --version
-
-            - name: Reconocimiento del terreno
-              run: |
-                  echo "Reconocimiento del terreno"
-                  ls /
+                  echo "Buscar los archivos de la Legión"
+                  ls -la
+                  echo ""
+                  echo "Funciona"
+                  echo ""
+                  echo "Planes:"
+                  ls planes/
+                  echo "Villanos:"
+                  ls villanos/
+                  echo "Inteligencia:"
+                  ls inteligencia/
