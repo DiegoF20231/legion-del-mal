@@ -38,7 +38,7 @@ if ls planes/*.md 1>/dev/null 2>&1; then
       echo "     → Rechazado por el Consejo. ¿Quieres que te atrape Batman?"
       ERRORES=$((ERRORES + 1))
     else
-      echo "  ✅ $NOMBRE_PLAN — Plan de escape verificado."
+      echo "  ✅ $NOMBRE_PLAN — Plan de escape verificado." 
     fi
   done
 else
