@@ -19,3 +19,5 @@ Spiderman es un superhéroe de Marvel
 
 - Spiderman: No way home
 - Spiderman: Far from Home
+
+## Estrategia recomendada

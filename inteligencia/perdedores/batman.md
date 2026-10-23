@@ -53,3 +53,5 @@ El Joker es nuestra mejor herramienta para esto: Batman no puede ignorar al Joke
 _"No tiene poderes. ¿Por qué le tenemos tanto miedo?"_ — Venom
 _"Porque tiene algo peor que poderes: tiempo para prepararse."_ — Lex Luthor
 _"Yo lo distraigo cuando quieran. Es mi pasatiempo favorito."_ — Joker
+
+
