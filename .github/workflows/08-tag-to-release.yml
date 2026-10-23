@@ -1,0 +1,80 @@
+name: Crear release al crear un tag
+
+on:
+  push:
+    tags:
+      - '**'
+
+permissions:
+  contents: write
+
+jobs:
+  crear-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener historial y archivos de la versión
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Preparar resumen de la versión
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_COMMIT: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          previous_tag="$(git describe --tags --abbrev=0 "${RELEASE_COMMIT}^" 2>/dev/null || true)"
+
+          {
+            echo "# Release ${RELEASE_TAG}"
+            echo
+            echo "## Cambios incluidos"
+
+            if [[ -n "${previous_tag}" ]]; then
+              echo "Cambios desde ${previous_tag}:"
+              echo
+              git log --no-merges --pretty=format:'- %s (%h)' "${previous_tag}..${RELEASE_COMMIT}"
+              echo
+              echo
+              echo "### Archivos modificados"
+              git diff --name-status "${previous_tag}" "${RELEASE_COMMIT}" | sed 's/^/- /'
+
+              echo
+              echo "## Información de logs"
+              changed_logs="$(git diff --name-only "${previous_tag}" "${RELEASE_COMMIT}" -- logs/)"
+              if [[ -n "${changed_logs}" ]]; then
+                while IFS= read -r log_file; do
+                  if [[ -f "${log_file}" ]]; then
+                    line_count="$(wc -l < "${log_file}" | tr -d ' ')"
+                    echo "- \`${log_file}\`: ${line_count} líneas (contenido omitido)."
+                  else
+                    echo "- \`${log_file}\`: eliminado en esta versión."
+                  fi
+                done <<< "${changed_logs}"
+              else
+                echo "No se modificaron archivos de logs en esta versión."
+              fi
+            else
+              echo "No se encontró un tag anterior; este resumen corresponde al primer release."
+              echo
+              echo "### Archivos incluidos"
+              git ls-tree -r --name-only "${RELEASE_COMMIT}" | sed 's/^/- /'
+              echo
+              echo "## Información de logs"
+              log_files="$(git ls-tree -r --name-only "${RELEASE_COMMIT}" -- logs/)"
+              if [[ -n "${log_files}" ]]; then
+                while IFS= read -r log_file; do
+                  line_count="$(wc -l < "${log_file}" | tr -d ' ')"
+                  echo "- \`${log_file}\`: ${line_count} líneas (contenido omitido)."
+                done <<< "${log_files}"
+              else
+                echo "No hay archivos de logs en esta versión."
+              fi
+            fi
+          } > release-notes.md
+
+      - name: Crear release para el tag
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: release-notes.md
